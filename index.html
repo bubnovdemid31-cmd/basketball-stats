@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Баскетбольная статистика - МБЛ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        /* Навигация */
+        .nav-bar {
+            background: #f0f0f0;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #666;
+        }
+
+        .nav-link:hover {
+            background: #e0e0e0;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .content {
+            padding: 30px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Турнирная таблица */
+        .standings-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .standings-table th,
+        .standings-table td {
+            padding: 14px 10px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .standings-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .standings-table tr {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .standings-table tr:hover {
+            background: #f0f0f0;
+        }
+
+        .standings-table td:first-child {
+            font-weight: bold;
+            font-size: 18px;
+            color: #667eea;
+        }
+
+        .team-name-cell {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* Список матчей команды */
+        .team-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .team-header h2 {
+            font-size: 28px;
+        }
+
+        .team-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .team-stat {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .match-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .match-card:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .match-opponent {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .match-score {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .match-date {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .match-result {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .result-win {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .result-loss {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Детали матча */
+        .match-detail-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .match-score-big {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .team-section {
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .team-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            padding: 10px 6px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 12px;
+        }
+
+        .stats-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .stats-table tr {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .stats-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .team-total {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .total-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .total-item {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .total-item strong {
+            display: block;
+            font-size: 18px;
+            color: #667eea;
+        }
+
+        /* Топ игроков */
+        .top-players-controls {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .top-players-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .top-players-table th,
+        .top-players-table td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .top-players-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .top-players-table tr {
+            cursor: pointer;
+        }
+
+        .top-players-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 750px;
+            border-radius: 15px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 15px 15px 0 0;
+            position: sticky;
+            top: 0;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+        }
+
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .player-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .player-stat-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .player-stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .player-stat-label {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .player-shooting-stats {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .shooting-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .stats-summary {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .standings-table th, .standings-table td {
+                padding: 8px 5px;
+                font-size: 12px;
+            }
+            .match-score-big {
+                font-size: 22px;
+            }
+            .team-header h2 {
+                font-size: 22px;
+            }
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏀 Баскетбольная статистика</h1>
+            <p>Межрегиональная баскетбольная лига</p>
+        </div>
+
+        <div class="nav-bar" id="navBar">
+            <button class="nav-link active" onclick="showPage('standings')">🏆 Турнирная таблица</button>
+            <button class="nav-link" onclick="showPage('topPlayers')">⭐ Лучшие игроки</button>
+            <div style="flex:1"></div>
+            <button class="back-btn" id="backBtn" style="display:none;" onclick="goBack()">← Назад</button>
+        </div>
+
+        <div id="pageContent" class="content">
+            <div class="loading">⏳ Загрузка данных...</div>
+        </div>
+    </div>
+
+    <div id="playerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalPlayerName">🏀 Игрок</h3>
+                <span class="close-modal" onclick="closePlayerModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== НАСТРОЙКИ ====================
+        const GITHUB_USERNAME = 'bubnovdemid31-cmd';        // ← ЗАМЕНИТЕ
+        const REPO_NAME = 'basketball-stats';        // ← ЗАМЕНИТЕ
+        const BRANCH = 'main';
+        
+        const JSON_FILES = [
+            'AMETIS-VIKING.json',
+            'VIKING-DINAMO.json',
+            'VIKING-PHOENIX.json',
+            'VIKINGI-TEST.json'
+        ];
+        
+        // ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+        let allMatches = [];
+        let currentPage = 'standings';
+        let selectedTeam = null;
+        let selectedMatch = null;
+        let historyStack = [];
+        
+        // ==================== ЗАГРУЗКА ДАННЫХ ====================
+        function getRawUrl(filename) {
+            return `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/${BRANCH}/${filename}`;
+        }
+        
+        async function fetchJSON(filename) {
+            const url = getRawUrl(filename);
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error(`Ошибка загрузки ${filename}:`, error);
+                return null;
+            }
+        }
+        
+        async function loadAllMatches() {
+            allMatches = [];
+            for (const filename of JSON_FILES) {
+                const data = await fetchJSON(filename);
+                if (data) {
+                    const matchInfo = data.match || {};
+                    const teamA = data.teamA || {};
+                    const teamB = data.teamB || {};
+                    allMatches.push({
+                        id: filename,
+                        data: data,
+                        teamA: teamA.name || matchInfo.teamA || 'Команда A',
+                        teamB: teamB.name || matchInfo.teamB || 'Команда B',
+                        scoreA: teamA.totalPoints || 0,
+                        scoreB: teamB.totalPoints || 0,
+                        date: matchInfo.date || 'Дата неизвестна',
+                        time: matchInfo.time || '',
+                        quarterScores: matchInfo.quarterScores || ''
+                    });
+                }
+            }
+            
+            allMatches.sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+            
+            if (allMatches.length === 0) {
+                document.getElementById('pageContent').innerHTML = '<div class="error-message">❌ Не удалось загрузить данные. Проверьте настройки GitHub.</div>';
+            } else {
+                showPage(currentPage);
+            }
+        }
+        
+        // ==================== ТУРНИРНАЯ ТАБЛИЦА ====================
+        function renderStandings() {
+            const teamsMap = new Map();
+            const headToHead = new Map();
+            
+            for (const match of allMatches) {
+                const teamAName = match.teamA;
+                const teamBName = match.teamB;
+                const scoreA = match.scoreA;
+                const scoreB = match.scoreB;
+                
+                if (!teamsMap.has(teamAName)) {
+                    teamsMap.set(teamAName, { name: teamAName, wins: 0, losses: 0, scored: 0, conceded: 0, points: 0 });
+                }
+                if (!teamsMap.has(teamBName)) {
+                    teamsMap.set(teamBName, { name: teamBName, wins: 0, losses: 0, scored: 0, conceded: 0, points: 0 });
+                }
+                
+                const teamA = teamsMap.get(teamAName);
+                const teamB = teamsMap.get(teamBName);
+                
+                teamA.scored += scoreA;
+                teamA.conceded += scoreB;
+                teamB.scored += scoreB;
+                teamB.conceded += scoreA;
+                
+                if (scoreA > scoreB) {
+                    teamA.wins++;
+                    teamB.losses++;
+                    teamA.points += 2;
+                    teamB.points += 1;
+                    headToHead.set(`${teamAName}_${teamBName}`, 'A');
+                    headToHead.set(`${teamBName}_${teamAName}`, 'B');
+                } else if (scoreB > scoreA) {
+                    teamB.wins++;
+                    teamA.losses++;
+                    teamB.points += 2;
+                    teamA.points += 1;
+                    headToHead.set(`${teamAName}_${teamBName}`, 'B');
+                    headToHead.set(`${teamBName}_${teamAName}`, 'A');
+                } else {
+                    teamA.points += 1;
+                    teamB.points += 1;
+                    headToHead.set(`${teamAName}_${teamBName}`, 'D');
+                    headToHead.set(`${teamBName}_${teamAName}`, 'D');
+                }
+            }
+            
+            let teams = Array.from(teamsMap.values());
+            
+            teams.sort((a, b) => {
+                if (a.points !== b.points) return b.points - a.points;
+                const h2h = headToHead.get(`${a.name}_${b.name}`);
+                if (h2h === 'A') return -1;
+                if (h2h === 'B') return 1;
+                const diffA = a.scored - a.conceded;
+                const diffB = b.scored - b.conceded;
+                if (diffA !== diffB) return diffB - diffA;
+                return b.scored - a.scored;
+            });
+            
+            let html = `
+                <div class="stats-summary">🏆 Турнирная таблица | Команд: ${teams.length} | Матчей: ${allMatches.length}</div>
+                <div style="overflow-x: auto;">
+                    <table class="standings-table">
+                        <thead>
+                            <tr>
+                                <th>#</th><th>Команда</th><th>И</th><th>В</th><th>П</th>
+                                <th>З</th><th>П</th><th>±</th><th>Очки</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            teams.forEach((team, idx) => {
+                const diff = team.scored - team.conceded;
+                const medal = idx === 0 ? '🥇 ' : (idx === 1 ? '🥈 ' : (idx === 2 ? '🥉 ' : ''));
+                html += `
+                    <tr onclick="selectTeam('${escapeHtml(team.name)}')">
+                        <td><strong>${idx + 1}</strong></td>
+                        <td class="team-name-cell"><strong>${medal}${escapeHtml(team.name)}</strong></td>
+                        <td>${team.wins + team.losses}</td>
+                        <td>${team.wins}</td>
+                        <td>${team.losses}</td>
+                        <td>${team.scored}</td>
+                        <td>${team.conceded}</td>
+                        <td>${diff > 0 ? '+' + diff : diff}</td>
+                        <td><strong>${team.points}</strong></td>
+                    </tr>
+                `;
+            });
+            
+            html += `</tbody></table></div>`;
+            document.getElementById('pageContent').innerHTML = html;
+        }
+        
+        // ==================== МАТЧИ КОМАНДЫ ====================
+        function selectTeam(teamName) {
+            historyStack.push({ page: currentPage });
+            selectedTeam = teamName;
+            currentPage = 'teamMatches';
+            updateBackButton(true);
+            
+            const teamMatches = allMatches.filter(m => m.teamA === teamName || m.teamB === teamName);
+            
+            // Статистика команды
+            let wins = 0, losses = 0, scored = 0, conceded = 0;
+            teamMatches.forEach(m => {
+                const isTeamA = m.teamA === teamName;
+                const teamScore = isTeamA ? m.scoreA : m.scoreB;
+                const oppScore = isTeamA ? m.scoreB : m.scoreA;
+                scored += teamScore;
+                conceded += oppScore;
+                if (teamScore > oppScore) wins++;
+                else if (teamScore < oppScore) losses++;
+            });
+            
+            let html = `
+                <div class="team-header">
+                    <h2>🏀 ${escapeHtml(teamName)}</h2>
+                    <div class="team-stats">
+                        <div class="team-stat">🎮 Игр: ${teamMatches.length}</div>
+                        <div class="team-stat">🏆 Побед: ${wins}</div>
+                        <div class="team-stat">📉 Поражений: ${losses}</div>
+                        <div class="team-stat">🏀 Забито: ${scored}</div>
+                        <div class="team-stat">🎯 Пропущено: ${conceded}</div>
+                        <div class="team-stat">📊 Разница: ${scored - conceded > 0 ? '+' + (scored - conceded) : scored - conceded}</div>
+                    </div>
+                </div>
+                <div class="stats-summary">📅 Список матчей (кликните для просмотра статистики)</div>
+                <div class="matches-list">
+            `;
+            
+            teamMatches.forEach(match => {
+                const isTeamA = match.teamA === teamName;
+                const opponent = isTeamA ? match.teamB : match.teamA;
+                const teamScore = isTeamA ? match.scoreA : match.scoreB;
+                const oppScore = isTeamA ? match.scoreB : match.scoreA;
+                const isWin = teamScore > oppScore;
+                
+                html += `
+                    <div class="match-card" onclick="selectMatch('${match.id}')">
+                        <div class="match-opponent">vs ${escapeHtml(opponent)}</div>
+                        <div class="match-score">${teamScore} : ${oppScore}</div>
+                        <div class="match-date">📅 ${match.date}</div>
+                        <div class="match-result ${isWin ? 'result-win' : 'result-loss'}">${isWin ? '🏆 ПОБЕДА' : '❌ ПОРАЖЕНИЕ'}</div>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            document.getElementById('pageContent').innerHTML = html;
+        }
+        
+        // ==================== ДЕТАЛИ МАТЧА ====================
+        function selectMatch(matchId) {
+            historyStack.push({ page: currentPage, team: selectedTeam });
+            selectedMatch = allMatches.find(m => m.id === matchId);
+            currentPage = 'matchDetail';
+            updateBackButton(true);
+            
+            const data = selectedMatch.data;
+            const matchInfo = data.match || {};
+            const teamA = data.teamA || {};
+            const teamB = data.teamB || {};
+            
+            let html = `
+                <div class="match-detail-header">
+                    <div>
+                        <div class="match-score-big">
+                            ${escapeHtml(teamA.name || matchInfo.teamA)} ${teamA.totalPoints || 0} <span>—</span> ${teamB.totalPoints || 0} ${escapeHtml(teamB.name || matchInfo.teamB)}
+                        </div>
+                        <div style="margin-top: 8px;">📅 ${matchInfo.date || '—'} | 🕐 ${matchInfo.time || '—'}</div>
+                    </div>
+                    <div class="match-result ${teamA.totalPoints > teamB.totalPoints ? 'result-win' : 'result-loss'}">
+                        ${teamA.totalPoints > teamB.totalPoints ? '🏆 ПОБЕДА ' + escapeHtml(teamA.name || matchInfo.teamA) : '🏆 ПОБЕДА ' + escapeHtml(teamB.name || matchInfo.teamB)}
+                    </div>
+                </div>
+            `;
+            
+            if (matchInfo.quarterScores) {
+                html += `<div class="stats-summary">📊 По четвертям: ${matchInfo.quarterScores}</div>`;
+            }
+            
+            if (teamA.players && teamA.players.length > 0) {
+                html += renderTeamTable(teamA.name || matchInfo.teamA, teamA.players, teamA);
+            }
+            
+            if (teamB.players && teamB.players.length > 0) {
+                html += renderTeamTable(teamB.name || matchInfo.teamB, teamB.players, teamB);
+            }
+            
+            document.getElementById('pageContent').innerHTML = html;
+        }
+        
+        function renderTeamTable(teamName, playersData, teamTotal) {
+            const columns = [
+                { key: 'number', label: '№' }, { key: 'name', label: 'Игрок' },
+                { key: 'points', label: 'Очки' },
+                { key: 'twoPoints', label: '2-очк', format: (v) => v ? `${v.made || 0}/${v.attempted || 0}` : '0/0' },
+                { key: 'threePoints', label: '3-очк', format: (v) => v ? `${v.made || 0}/${v.attempted || 0}` : '0/0' },
+                { key: 'fieldGoals', label: 'Броски', format: (v) => v ? `${v.made || 0}/${v.attempted || 0}` : '0/0' },
+                { key: 'freeThrows', label: 'Штраф', format: (v) => v ? `${v.made || 0}/${v.attempted || 0}` : '0/0' },
+                { key: 'rebounds', label: 'Подб', format: (v) => v ? (v.total || 0) : 0 },
+                { key: 'assists', label: 'АП' }, { key: 'steals', label: 'ПХ' }, { key: 'blocks', label: 'БШ' },
+                { key: 'turnovers', label: 'ПТ' }, { key: 'fouls', label: 'Ф' }, { key: 'plusMinus', label: '+/-' },
+                { key: 'efficiency', label: 'Эф' }
+            ];
+            
+            let html = `<div class="team-section">
+                <div class="team-title">🏀 ${escapeHtml(teamName)}</div>
+                <div style="overflow-x: auto;">
+                    <table class="stats-table">
+                        <thead><tr>`;
+            columns.forEach(col => html += `<th>${col.label}</th>`);
+            html += `</thead><tbody>`;
+            
+            const sortedPlayers = [...playersData].sort((a, b) => (b.points || 0) - (a.points || 0));
+            sortedPlayers.forEach((player) => {
+                const playerDataEnc = encodeURIComponent(JSON.stringify(player));
+                html += `<tr ondblclick="showPlayerStats('${encodeURIComponent(player.name)}', '${encodeURIComponent(teamName)}', '${playerDataEnc}')">`;
+                columns.forEach(col => {
+                    let value = player[col.key];
+                    if (col.format) value = col.format(value);
+                    else if (value === undefined) value = '0';
+                    html += `<td>${value}</td>`;
+                });
+                html += `</tr>`;
+            });
+            html += `</tbody></td></div>`;
+            
+            if (teamTotal) {
+                html += `<div class="team-total"><h3>📊 Итоги команды</h3><div class="total-stats">
+                    <div class="total-item"><strong>${teamTotal.totalPoints || 0}</strong> очков</div>
+                    <div class="total-item"><strong>${teamTotal.twoPoints?.made || 0}/${teamTotal.twoPoints?.attempted || 0}</strong> 2-очк</div>
+                    <div class="total-item"><strong>${teamTotal.threePoints?.made || 0}/${teamTotal.threePoints?.attempted || 0}</strong> 3-очк</div>
+                    <div class="total-item"><strong>${teamTotal.rebounds?.total || 0}</strong> подборов</div>
+                    <div class="total-item"><strong>${teamTotal.assists || 0}</strong> передач</div>
+                    <div class="total-item"><strong>${teamTotal.efficiency || 0}</strong> эффективность</div>
+                </div></div>`;
+            }
+            html += `</div>`;
+            return html;
+        }
+        
+        // ==================== ТОП ИГРОКОВ ====================
+        function renderTopPlayers() {
+            const playersMap = new Map();
+            for (const match of allMatches) {
+                for (const teamKey of ['teamA', 'teamB']) {
+                    const teamData = match.data[teamKey] || {};
+                    const teamName = teamData.name || (teamKey === 'teamA' ? match.teamA : match.teamB);
+                    for (const p of (teamData.players || [])) {
+                        if (!p.name || p.name === 'Неизвестный') continue;
+                        const key = `${p.name}_${teamName}`;
+                        if (!playersMap.has(key)) {
+                            playersMap.set(key, { name: p.name, team: teamName, games: 0, points: 0, assists: 0, rebounds: 0 });
+                        }
+                        const stat = playersMap.get(key);
+                        stat.games++;
+                        stat.points += p.points || 0;
+                        stat.assists += p.assists || 0;
+                        stat.rebounds += p.rebounds?.total || 0;
+                    }
+                }
+            }
+            
+            const players = Array.from(playersMap.values()).map(p => ({
+                ...p,
+                avgPoints: (p.points / p.games).toFixed(1),
+                avgAssists: (p.assists / p.games).toFixed(1),
+                avgRebounds: (p.rebounds / p.games).toFixed(1),
+                totalPoints: p.points,
+                totalAssists: p.assists,
+                totalRebounds: p.rebounds
+            }));
+            
+            window.topPlayersData = players;
+            
+            const html = `
+                <div class="stats-summary">⭐ Лучшие игроки | Всего: ${players.length} | Матчей: ${allMatches.length}</div>
+                <div class="top-players-controls">
+                    <div class="stat-selector"><label>📊 Показатель:</label>
+                        <select id="statSelect" onchange="updateTopPlayersList()">
+                            <option value="avgPoints" selected>🏀 Очки (в среднем)</option>
+                            <option value="avgAssists">🎯 Передачи (в среднем)</option>
+                            <option value="avgRebounds">📊 Подборы (в среднем)</option>
+                            <option value="totalPoints">🏀 Очки (всего)</option>
+                            <option value="totalAssists">🎯 Передачи (всего)</option>
+                            <option value="totalRebounds">📊 Подборы (всего)</option>
+                        </select>
+                    </div>
+                    <div class="stat-selector"><label>📈 Топ:</label>
+                        <select id="topCountSelect" onchange="updateTopPlayersList()">
+                            <option value="5">Топ-5</option>
+                            <option value="10" selected>Топ-10</option>
+                            <option value="15">Топ-15</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="topPlayersTable"></div>
+            `;
+            document.getElementById('pageContent').innerHTML = html;
+            updateTopPlayersList();
+        }
+        
+        function updateTopPlayersList() {
+            if (!window.topPlayersData) return;
+            const statType = document.getElementById('statSelect').value;
+            const topCount = parseInt(document.getElementById('topCountSelect').value);
+            const players = [...window.topPlayersData];
+            players.sort((a, b) => parseFloat(b[statType]) - parseFloat(a[statType]));
+            const topPlayers = players.slice(0, topCount);
+            
+            const statLabels = {
+                avgPoints: 'Очки (ср)', avgAssists: 'Передачи (ср)', avgRebounds: 'Подборы (ср)',
+                totalPoints: 'Очки (всего)', totalAssists: 'Передачи (всего)', totalRebounds: 'Подборы (всего)'
+            };
+            
+            let tableHtml = `<div style="overflow-x: auto;"><table class="top-players-table"><thead><tr>
+                <th>#</th><th>Игрок</th><th>Команда</th><th>Игр</th>
+                <th>${statLabels[statType]}</th><th>Очки</th><th>Перед</th><th>Подб</th>
+            </tr></thead><tbody>`;
+            
+            topPlayers.forEach((player, i) => {
+                tableHtml += `<tr ondblclick="showPlayerStatsFromTop('${escapeHtml(player.name)}', '${escapeHtml(player.team)}')">
+                    <td><strong>${i+1}</strong></td>
+                    <td><strong>${escapeHtml(player.name)}</strong></td>
+                    <td>${escapeHtml(player.team)}</td>
+                    <td>${player.games}</td>
+                    <td><strong>${player[statType]}</strong></td>
+                    <td>${player.totalPoints}</td>
+                    <td>${player.totalAssists}</td>
+                    <td>${player.totalRebounds}</td>
+                </tr>`;
+            });
+            tableHtml += `</tbody></table></div>`;
+            document.getElementById('topPlayersTable').innerHTML = tableHtml;
+        }
+        
+        // ==================== СТАТИСТИКА ИГРОКА ====================
+        async function showPlayerStats(nameEnc, teamEnc, dataEnc) {
+            const playerName = decodeURIComponent(nameEnc);
+            const teamName = decodeURIComponent(teamEnc);
+            const player = JSON.parse(decodeURIComponent(dataEnc));
+            
+            const playerMatches = [];
+            let totalGames = 0, totalPoints = 0, totalAssists = 0, totalRebounds = 0;
+            
+            for (const match of allMatches) {
+                const teamAData = match.data.teamA || {};
+                const teamBData = match.data.teamB || {};
+                let found = null;
+                if (teamAData.players) found = teamAData.players.find(p => p.name === playerName);
+                if (!found && teamBData.players) found = teamBData.players.find(p => p.name === playerName);
+                if (found) {
+                    totalGames++;
+                    totalPoints += found.points || 0;
+                    totalAssists += found.assists || 0;
+                    totalRebounds += found.rebounds?.total || 0;
+                    playerMatches.push({
+                        date: match.date,
+                        matchName: `${match.teamA} vs ${match.teamB}`,
+                        points: found.points || 0,
+                        assists: found.assists || 0,
+                        rebounds: found.rebounds?.total || 0
+                    });
+                }
+            }
+            
+            const avgPoints = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : 0;
+            const twoPerc = player.twoPoints?.attempted > 0 ? ((player.twoPoints.made / player.twoPoints.attempted) * 100).toFixed(1) : 0;
+            const threePerc = player.threePoints?.attempted > 0 ? ((player.threePoints.made / player.threePoints.attempted) * 100).toFixed(1) : 0;
+            
+            const modalHtml = `
+                <div class="player-stats-grid">
+                    <div class="player-stat-card"><div class="player-stat-value">${player.points || 0}</div><div class="player-stat-label">🏀 Очки</div></div>
+                    <div class="player-stat-card"><div class="player-stat-value">${avgPoints}</div><div class="player-stat-label">📊 Очки (ср)</div></div>
+                    <div class="player-stat-card"><div class="player-stat-value">${player.assists || 0}</div><div class="player-stat-label">🎯 Передачи</div></div>
+                    <div class="player-stat-card"><div class="player-stat-value">${player.rebounds?.total || 0}</div><div class="player-stat-label">📊 Подборы</div></div>
+                    <div class="player-stat-card"><div class="player-stat-value">${player.steals || 0}</div><div class="player-stat-label">✋ Перехваты</div></div>
+                    <div class="player-stat-card"><div class="player-stat-value">${player.blocks || 0}</div><div class="player-stat-label">🛡️ Блокшоты</div></div>
+                    <div class="player-stat-card"><div class="player-stat-value">${player.efficiency || 0}</div><div class="player-stat-label">⭐ Эффективность</div></div>
+                    <div class="player-stat-card"><div class="player-stat-value">${totalGames}</div><div class="player-stat-label">🎮 Матчей</div></div>
+                </div>
+                <div class="player-shooting-stats">
+                    <h4>🎯 Точность бросков</h4>
+                    <div class="shooting-row"><span>2-очковые:</span><span>${player.twoPoints?.made || 0}/${player.twoPoints?.attempted || 0} (${twoPerc}%)</span></div>
+                    <div class="shooting-row"><span>3-очковые:</span><span>${player.threePoints?.made || 0}/${player.threePoints?.attempted || 0} (${threePerc}%)</span></div>
+                </div>
+                <div class="player-match-list" style="background:#f8f9fa;border-radius:10px;padding:12px;margin-top:15px;">
+                    <h4>📅 Все матчи (${totalGames})</h4>
+                    ${playerMatches.map(m => `<div style="padding:6px 0;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;flex-wrap:wrap;"><span>${m.date} - ${m.matchName}</span><span>🏀 ${m.points} | 🎯 ${m.assists} | 📊 ${m.rebounds}</span></div>`).join('')}
+                </div>
+            `;
+            
+            document.getElementById('modalPlayerName').innerHTML = `🏀 ${escapeHtml(player.name)} (${escapeHtml(teamName)})`;
+            document.getElementById('modalBody').innerHTML = modalHtml;
+            document.getElementById('playerModal').style.display = 'block';
+        }
+        
+        async function showPlayerStatsFromTop(name, team) {
+            for (const match of allMatches) {
+                const teamData = match.data.teamA?.name === team ? match.data.teamA : (match.data.teamB?.name === team ? match.data.teamB : null);
+                if (teamData && teamData.players) {
+                    const player = teamData.players.find(p => p.name === name);
+                    if (player) {
+                        await showPlayerStats(encodeURIComponent(name), encodeURIComponent(team), encodeURIComponent(JSON.stringify(player)));
+                        return;
+                    }
+                }
+            }
+        }
+        
+        // ==================== НАВИГАЦИЯ ====================
+        function showPage(page) {
+            historyStack = [];
+            selectedTeam = null;
+            selectedMatch = null;
+            currentPage = page;
+            updateBackButton(false);
+            
+            if (page === 'standings') {
+                renderStandings();
+            } else if (page === 'topPlayers') {
+                renderTopPlayers();
+            }
+            
+            // Обновляем активную кнопку
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (page === 'standings') {
+                document.querySelector('.nav-link:first-child').classList.add('active');
+            } else {
+                document.querySelector('.nav-link:last-child').classList.add('active');
+            }
+        }
+        
+        function goBack() {
+            if (historyStack.length === 0) {
+                showPage('standings');
+                return;
+            }
+            
+            const prev = historyStack.pop();
+            if (prev.page === 'teamMatches') {
+                currentPage = 'teamMatches';
+                selectedTeam = prev.team;
+                updateBackButton(true);
+                selectTeam(selectedTeam);
+            } else if (prev.page === 'matchDetail') {
+                currentPage = 'teamMatches';
+                selectedTeam = prev.team;
+                updateBackButton(true);
+                selectTeam(selectedTeam);
+            } else {
+                showPage('standings');
+            }
+        }
+        
+        function updateBackButton(show) {
+            const backBtn = document.getElementById('backBtn');
+            backBtn.style.display = show ? 'flex' : 'none';
+        }
+        
+        function closePlayerModal() {
+            document.getElementById('playerModal').style.display = 'none';
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('playerModal');
+            if (event.target === modal) modal.style.display = 'none';
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '&gt;':'&gt;' }[m]));
+        }
+        
+        // Запуск
+        loadAllMatches();
+    </script>
+</body>
+</html>
