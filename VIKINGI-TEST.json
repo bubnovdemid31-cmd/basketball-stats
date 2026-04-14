@@ -1,0 +1,480 @@
+{
+  "match": {
+    "teamA": "Викинги",
+    "teamB": "Альфа",
+    "score": "64:13",
+    "quarterScores": "22:11,3:0,10:2",
+    "date": "03.04.2026",
+    "time": "19:00"
+  },
+  "teamA": {
+    "name": "Викинги",
+    "totalPoints": 64,
+    "twoPoints": {
+      "made": 13,
+      "attempted": 57,
+      "percent": 23
+    },
+    "threePoints": {
+      "made": 12,
+      "attempted": 92,
+      "percent": 13
+    },
+    "fieldGoals": {
+      "made": 25,
+      "attempted": 69,
+      "percent": 36
+    },
+    "freeThrows": {
+      "made": 2,
+      "attempted": 10,
+      "percent": 20
+    },
+    "assists": 10,
+    "steals": 16,
+    "blocks": 0,
+    "turnovers": 1,
+    "fouls": 1,
+    "foulsDrawn": 1,
+    "rebounds": {
+      "offensive": 6,
+      "defensive": 11,
+      "total": 17
+    },
+    "time": "200:00",
+    "plusMinus": 25,
+    "efficiency": 95,
+    "players": [
+      {
+        "number": "*",
+        "name": "БУБНОВ Д.",
+        "points": 38,
+        "twoPoints": {
+          "made": 6,
+          "attempted": 6,
+          "percent": 100
+        },
+        "threePoints": {
+          "made": 8,
+          "attempted": 9,
+          "percent": 89
+        },
+        "fieldGoals": {
+          "made": 14,
+          "attempted": 15,
+          "percent": 93
+        },
+        "freeThrows": {
+          "made": 2,
+          "attempted": 2,
+          "percent": 100
+        },
+        "assists": 7,
+        "steals": 13,
+        "blocks": 0,
+        "turnovers": 1,
+        "fouls": 1,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 4,
+          "defensive": 9,
+          "total": 13
+        },
+        "time": "40:00",
+        "plusMinus": 51,
+        "efficiency": 70
+      },
+      {
+        "number": "*",
+        "name": "ЛЕСНИКОВ В.",
+        "points": 0,
+        "twoPoints": {
+          "made": 0,
+          "attempted": 2,
+          "percent": 0
+        },
+        "threePoints": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "fieldGoals": {
+          "made": 0,
+          "attempted": 2,
+          "percent": 0
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 0,
+        "steals": 1,
+        "blocks": 0,
+        "turnovers": 0,
+        "fouls": 0,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 0,
+          "total": 0
+        },
+        "time": "40:00",
+        "plusMinus": 51,
+        "efficiency": -1
+      },
+      {
+        "number": "*",
+        "name": "НЕЧАЕВ В.",
+        "points": 18,
+        "twoPoints": {
+          "made": 6,
+          "attempted": 6,
+          "percent": 100
+        },
+        "threePoints": {
+          "made": 2,
+          "attempted": 2,
+          "percent": 100
+        },
+        "fieldGoals": {
+          "made": 8,
+          "attempted": 8,
+          "percent": 100
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 1,
+        "steals": 2,
+        "blocks": 0,
+        "turnovers": 0,
+        "fouls": 0,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 1,
+          "total": 1
+        },
+        "time": "40:00",
+        "plusMinus": 51,
+        "efficiency": 22
+      },
+      {
+        "number": "*",
+        "name": "ПЛУТ Д.",
+        "points": 2,
+        "twoPoints": {
+          "made": 1,
+          "attempted": 1,
+          "percent": 100
+        },
+        "threePoints": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "fieldGoals": {
+          "made": 1,
+          "attempted": 1,
+          "percent": 100
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 0,
+        "steals": 0,
+        "blocks": 0,
+        "turnovers": 0,
+        "fouls": 0,
+        "foulsDrawn": 1,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 0,
+          "total": 0
+        },
+        "time": "40:00",
+        "plusMinus": 51,
+        "efficiency": 1
+      },
+      {
+        "number": "*",
+        "name": "ВИЦИЕНКО Л.",
+        "points": 6,
+        "twoPoints": {
+          "made": 0,
+          "attempted": 8,
+          "percent": 0
+        },
+        "threePoints": {
+          "made": 2,
+          "attempted": 2,
+          "percent": 100
+        },
+        "fieldGoals": {
+          "made": 2,
+          "attempted": 10,
+          "percent": 20
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 2,
+        "steals": 0,
+        "blocks": 0,
+        "turnovers": 0,
+        "fouls": 0,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 1,
+          "defensive": 2,
+          "total": 3
+        },
+        "time": "40:00",
+        "plusMinus": 51,
+        "efficiency": 3
+      }
+    ]
+  },
+  "teamB": {
+    "name": "Альфа",
+    "totalPoints": 13,
+    "twoPoints": {
+      "made": 3,
+      "attempted": 8,
+      "percent": 38
+    },
+    "threePoints": {
+      "made": 2,
+      "attempted": 5,
+      "percent": 40
+    },
+    "fieldGoals": {
+      "made": 5,
+      "attempted": 13,
+      "percent": 38
+    },
+    "freeThrows": {
+      "made": 1,
+      "attempted": 1,
+      "percent": 100
+    },
+    "assists": 1,
+    "steals": 1,
+    "blocks": 0,
+    "turnovers": 16,
+    "fouls": 1,
+    "foulsDrawn": 1,
+    "rebounds": {
+      "offensive": 0,
+      "defensive": 2,
+      "total": 2
+    },
+    "time": "200:00",
+    "plusMinus": -2,
+    "efficiency": -7,
+    "players": [
+      {
+        "number": "*",
+        "name": "ИГРОК 1",
+        "points": 5,
+        "twoPoints": {
+          "made": 1,
+          "attempted": 3,
+          "percent": 33
+        },
+        "threePoints": {
+          "made": 1,
+          "attempted": 2,
+          "percent": 50
+        },
+        "fieldGoals": {
+          "made": 2,
+          "attempted": 5,
+          "percent": 40
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 0,
+        "steals": 1,
+        "blocks": 0,
+        "turnovers": 1,
+        "fouls": 0,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 0,
+          "total": 0
+        },
+        "time": "40:00",
+        "plusMinus": -5,
+        "efficiency": 2
+      },
+      {
+        "number": "*",
+        "name": "ИГРОК 2",
+        "points": 0,
+        "twoPoints": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "threePoints": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "fieldGoals": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 0,
+        "steals": 0,
+        "blocks": 0,
+        "turnovers": 0,
+        "fouls": 0,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 0,
+          "total": 0
+        },
+        "time": "40:00",
+        "plusMinus": -5,
+        "efficiency": 0
+      },
+      {
+        "number": "*",
+        "name": "ИГРОК 3",
+        "points": 3,
+        "twoPoints": {
+          "made": 1,
+          "attempted": 1,
+          "percent": 100
+        },
+        "threePoints": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "fieldGoals": {
+          "made": 1,
+          "attempted": 1,
+          "percent": 100
+        },
+        "freeThrows": {
+          "made": 1,
+          "attempted": 1,
+          "percent": 100
+        },
+        "assists": 1,
+        "steals": 0,
+        "blocks": 0,
+        "turnovers": 1,
+        "fouls": 1,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 2,
+          "total": 2
+        },
+        "time": "40:00",
+        "plusMinus": -5,
+        "efficiency": 6
+      },
+      {
+        "number": "*",
+        "name": "ИГРОК 4",
+        "points": 0,
+        "twoPoints": {
+          "made": 0,
+          "attempted": 1,
+          "percent": 0
+        },
+        "threePoints": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "fieldGoals": {
+          "made": 0,
+          "attempted": 1,
+          "percent": 0
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 0,
+        "steals": 0,
+        "blocks": 0,
+        "turnovers": 1,
+        "fouls": 0,
+        "foulsDrawn": 0,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 0,
+          "total": 0
+        },
+        "time": "40:00",
+        "plusMinus": -5,
+        "efficiency": -2
+      },
+      {
+        "number": "*",
+        "name": "ИГРОК 5",
+        "points": 5,
+        "twoPoints": {
+          "made": 1,
+          "attempted": 3,
+          "percent": 33
+        },
+        "threePoints": {
+          "made": 1,
+          "attempted": 3,
+          "percent": 33
+        },
+        "fieldGoals": {
+          "made": 2,
+          "attempted": 6,
+          "percent": 33
+        },
+        "freeThrows": {
+          "made": 0,
+          "attempted": 0,
+          "percent": 0
+        },
+        "assists": 0,
+        "steals": 0,
+        "blocks": 0,
+        "turnovers": 9,
+        "fouls": 0,
+        "foulsDrawn": 1,
+        "rebounds": {
+          "offensive": 0,
+          "defensive": 0,
+          "total": 0
+        },
+        "time": "40:00",
+        "plusMinus": -5,
+        "efficiency": -9
+      }
+    ]
+  }
+}
